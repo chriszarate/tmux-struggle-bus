@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-# Provide CPU and memory usage indicators. Don't bother with exact percentages
-# and real-time updates -- just let the user know if her computer is on the
-# struggle bus and let her take it from there.
+# Provide CPU, disk, and memory usage indicators. Don't bother with exact
+# percentages and real-time updates -- just let the user know if her computer
+# is on the struggle bus and let her take it from there.
 
 # Presently, memory usage is only implemented on OS X (via sysctl).
-
-# Provide a count of running and stopped Docker containers.
 
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -25,6 +23,7 @@ update_status() {
   local status_value
   status_value="$(get_tmux_option "$1")"
   status_value="${status_value/$usage_placeholder_cpu/$usage_script_cpu}"
+  status_value="${status_value/$usage_placeholder_disk/$usage_script_disk}"
   status_value="${status_value/$usage_placeholder_mem/$usage_script_mem}"
 
   tmux set-option -gq "$1" "$status_value"
@@ -32,10 +31,12 @@ update_status() {
 
 # Commands
 usage_script_cpu="#($CURRENT_DIR/scripts/cpu.sh)"
+usage_script_disk="#($CURRENT_DIR/scripts/disk.sh)"
 usage_script_mem="#($CURRENT_DIR/scripts/memory.sh)"
 
 # Substitution
 usage_placeholder_cpu="\#{usage_cpu}"
+usage_placeholder_disk="\#{usage_disk}"
 usage_placeholder_mem="\#{usage_mem}"
 
 update_status "status-left"

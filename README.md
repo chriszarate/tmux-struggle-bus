@@ -9,8 +9,8 @@ tabs. That’s what this `tmux` plugin does.
 
 ## Usage
 
-Add `#{usage_cpu}` and/or `#{usage_mem}` to your `status-left` and/or
-`status-right`:
+Add `#{usage_cpu}`, `#{usage_disk}`, and/or `#{usage_mem}` to your `status-left`
+or `status-right`:
 
 ```
 set -g status-right '#{usage_cpu}%a %Y-%m-%d %H:%M'
@@ -19,8 +19,8 @@ set -g status-right '#{usage_cpu}%a %Y-%m-%d %H:%M'
 When your computer reaches a threshold of usage, an indicator will appear.
 Otherwise, nothing is shown.
 
-Currently, this plugin provides indicators for elevated CPU and memory usage.
-Memory usage is only implemented on `Darwin` (via `sysctl`).
+Currently, this plugin provides indicators for elevated CPU, disk usage, and
+memory usage. Memory usage is only implemented on `Darwin` (via `sysctl`).
 
 
 ## Installation
@@ -49,13 +49,16 @@ set -g @usage_format_end '#[fg=white,bg=black]'
 
 # Icons
 set -g @usage_icon_cpu ' CPU '
+set -g @usage_icon_disk ''
 set -g @usage_icon_mem ' MEM '
 
 # Thresholds
-set -g @usage_threshold_cpu_danger '9'
-set -g @usage_threshold_cpu_warning '8'
-set -g @usage_threshold_mem_danger '5'
-set -g @usage_threshold_mem_warning '3'
+set -g @usage_threshold_cpu_danger '90'
+set -g @usage_threshold_cpu_warning '80'
+set -g @usage_threshold_disk_danger '95'
+set -g @usage_threshold_disk_warning '90'
+set -g @usage_threshold_mem_danger '50'
+set -g @usage_threshold_mem_warning '30'
 ```
 
 [tpm]: https://github.com/tmux-plugins/tpm
