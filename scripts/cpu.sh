@@ -15,8 +15,8 @@ usage_format_end=$(get_tmux_option "@usage_format_end" "#[fg=default,bg=default]
 usage_icon_cpu=$(get_tmux_option "@usage_icon_cpu" " CPU ")
 
 # Thresholds
-usage_threshold_cpu_danger=$(get_tmux_option "@usage_threshold_cpu_danger" "9")
-usage_threshold_cpu_warning=$(get_tmux_option "@usage_threshold_cpu_warning" "8")
+usage_threshold_cpu_danger=$(get_tmux_option "@usage_threshold_cpu_danger" "90")
+usage_threshold_cpu_warning=$(get_tmux_option "@usage_threshold_cpu_warning" "80")
 
 main() {
   local load_average
@@ -40,8 +40,8 @@ main() {
     # Get 1m load average.
     load_average=$(uptime | awk '{print $10}')
 
-    # Calculate real load average from 1-10-ish.
-    real_load_average=$(echo "$load_average * 10 / $physical_cpus" | bc)
+    # Calculate real load average from 1-100-ish.
+    real_load_average=$(echo "$load_average * 100 / $physical_cpus" | bc)
 
     # Test against thresholds.
     if [ "$real_load_average" -ge "$usage_threshold_cpu_danger" ]; then

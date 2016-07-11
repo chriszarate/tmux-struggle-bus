@@ -15,8 +15,8 @@ usage_format_end=$(get_tmux_option "@usage_format_end" "#[fg=default,bg=default]
 usage_icon_mem=$(get_tmux_option "@usage_icon_mem" " MEM ")
 
 # Thresholds
-usage_threshold_mem_danger=$(get_tmux_option "@usage_threshold_mem_danger" "5")
-usage_threshold_mem_warning=$(get_tmux_option "@usage_threshold_mem_warning" "3")
+usage_threshold_mem_danger=$(get_tmux_option "@usage_threshold_mem_danger" "50")
+usage_threshold_mem_warning=$(get_tmux_option "@usage_threshold_mem_warning" "30")
 
 main() {
   local memory_pressure
@@ -32,7 +32,7 @@ main() {
     page_data=$(sysctl -a vm | grep page_free)
     page_target=$(echo "$page_data" | grep 'page_free_target' | awk '{print $2}')
     page_count=$(echo "$page_data" | grep 'page_free_count' | awk '{print $2}')
-    memory_pressure=$(echo "(($page_target - $page_count) * 10) / $page_target" | bc)
+    memory_pressure=$(echo "(($page_target - $page_count) * 100) / $page_target" | bc)
   fi
 
   # Test against thresholds.
