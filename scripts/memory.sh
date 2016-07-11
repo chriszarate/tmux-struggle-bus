@@ -25,7 +25,7 @@ main() {
   local page_data
   local page_target
 
-  output=" $usage_format_begin_danger MEM? "
+  output=" $usage_format_begin_danger MEM? $usage_format_end"
 
   # Try to estimate memory pressure.
   if type sysctl >/dev/null 2>&1; then

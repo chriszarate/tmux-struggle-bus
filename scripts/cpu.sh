@@ -24,7 +24,7 @@ main() {
   local physical_cpus
   local real_load_average
 
-  output=" $usage_format_begin_danger CPU? "
+  output=" $usage_format_begin_danger CPU? $usage_format_end"
   physical_cpus=1
 
   # Make sure uptime is available.
