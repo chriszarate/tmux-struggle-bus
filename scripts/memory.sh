@@ -9,7 +9,7 @@ source "$CURRENT_DIR/helpers.sh"
 # Colors
 usage_format_begin_danger=$(get_tmux_option "@usage_format_begin_danger" "#[fg=black,bg=red]")
 usage_format_begin_warning=$(get_tmux_option "@usage_format_begin_warning" "#[fg=black,bg=yellow]")
-usage_format_end=$(get_tmux_option "@usage_format_end" "#[fg=white,bg=black]")
+usage_format_end=$(get_tmux_option "@usage_format_end" "#[fg=default,bg=default]")
 
 # Icons
 usage_icon_mem=$(get_tmux_option "@usage_icon_mem" " MEM ")
