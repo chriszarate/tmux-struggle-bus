@@ -27,12 +27,15 @@ main() {
 
   output=" $usage_format_begin_danger MEM? $usage_format_end"
 
-  # Try to estimate memory pressure.
-  if type sysctl >/dev/null 2>&1; then
+  # Try to estimate memory pressure. Fallback to /proc/meminfo. Not a real
+  # measure of memory pressure.
+  if [ $(uname) = "Darwin" ]; then
     page_data=$(sysctl -a vm | grep page_free)
     page_target=$(echo "$page_data" | grep 'page_free_target' | awk '{print $2}')
     page_count=$(echo "$page_data" | grep 'page_free_count' | awk '{print $2}')
     memory_pressure=$(echo "(($page_target - $page_count) * 100) / $page_target" | bc)
+  elif [ -f /proc/meminfo ]; then
+    memory_pressure=$(awk '/MemTotal/{t=$2}/MemAvailable/{a=$2}END{print int(a/t*100)}' /proc/meminfo)
   fi
 
   # Test against thresholds.
